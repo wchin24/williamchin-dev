@@ -7,7 +7,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'William Chin',
-    description: 'Thoughts on product building, iOS development, and the indie developer life.',
+    description: 'Thoughts on product building, shipping apps, and the indie developer life.',
     site: context.site!,
     items: posts
       .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
