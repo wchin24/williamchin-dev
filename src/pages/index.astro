@@ -3,11 +3,37 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const featuredApps = await getCollection('apps', ({ data }) => data.featured);
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'William Chin',
+  url: 'https://williamchin.dev',
+  jobTitle: 'Principal Product Manager',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Amplitude',
+    url: 'https://amplitude.com',
+  },
+  sameAs: [
+    'https://github.com/wchin24',
+    'https://twitter.com/williamchin',
+  ],
+  knowsAbout: [
+    'Product Management',
+    'iOS Development',
+    'Swift',
+    'React Native',
+    'SaaS Monetization',
+    'Mobile App Development',
+  ],
+};
 ---
 
 <BaseLayout
   title="William Chin"
   description="Principal PM at Amplitude and indie app builder. I build products at scale and ship apps I wish existed."
+  jsonLd={personJsonLd}
 >
 
   <!-- ─── Hero ──────────────────────────────────────────────────────────── -->

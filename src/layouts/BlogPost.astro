@@ -14,7 +14,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
 }).format(publishDate);
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} ogType="article" publishDate={publishDate}>
   <article class="content-container py-16 sm:py-24">
 
     <!-- Back link -->
