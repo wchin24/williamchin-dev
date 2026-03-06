@@ -1,0 +1,242 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const experience = [
+  {
+    company:  'Amplitude',
+    location: 'San Francisco Bay Area',
+    roles: [
+      {
+        title:  'Principal Product Manager',
+        period: 'Mar 2025 – Present',
+      },
+      {
+        title:  'Senior Product Manager',
+        period: 'Mar 2023 – Mar 2025',
+      },
+      {
+        title:  'Product Manager',
+        period: 'Jun 2021 – Mar 2023',
+      },
+    ],
+    bullets: [
+      'Lead end-to-end monetization strategy across $300M+ sales-led and $5M+ ARR self-serve motions, owning pricing & packaging architecture and go-to-market decisions.',
+      'Architect and own the entitlements platform powering PLG and sales-led provisioning for all customers across product tiers.',
+      'Launched self-serve Amplitude Plus Plan, achieving $5M+ ARR and 2,000+ customers with consistent quarter-over-quarter growth since 2023.',
+      'Ran continuous A/B experiments on self-serve packaging, improving free-to-paid conversion by 50% YoY.',
+      'Integrated Intercom platform, achieving $1M in cost savings and improving customer activation and engagement by 11% and 25% respectively.',
+      'Prioritized highest-leverage internal GTM tooling, unlocking $5M+ in top-line revenue and eliminating 3,000+ hours of manual overhead.',
+    ],
+  },
+  {
+    company:  'Clover Network',
+    location: 'Sunnyvale, CA',
+    roles: [
+      {
+        title:  'Product Manager',
+        period: 'Mar 2020 – Jun 2021',
+      },
+      {
+        title:  'Associate Product Manager',
+        period: 'Apr 2019 – Mar 2020',
+      },
+    ],
+    bullets: [
+      'Led Partner Tools Platform serving 8,000+ support and bank partners, owning end-to-end product development across partner, customer support, and internal admin personas.',
+      'Launched internal merchant onboarding configuration tool, reducing overhead in feature rollouts by 75%.',
+      'Established Google Analytics framework and foundational KPIs (MAU, feature adoption, partner sales) from the ground up.',
+      'Defined feature requirements and created 10+ wireframes that measurably reduced merchant call duration into customer support.',
+      'Managed agile/scrum ceremonies for a cross-functional team of 8 engineers, from backlog grooming through retrospectives.',
+    ],
+  },
+  {
+    company:  'Deloitte',
+    location: 'San Francisco Bay Area',
+    roles: [
+      {
+        title:  'Senior Consultant',
+        period: 'Aug 2016 – Apr 2019',
+      },
+      {
+        title:  'Advisory Consultant',
+        period: 'Sep 2014 – Aug 2016',
+      },
+    ],
+    bullets: [
+      'Rated top 10% YoY at level, leading engagements across 7 high-profile technology clients representing $10M+ in annual revenue.',
+      'Partnered with engineering and finance teams at a large social media client to implement a hashing service monitoring data integrity across a $1B+ monthly invoicing pipeline.',
+      'Mapped end-to-end digital advertising revenue (CPM, CPC, CPA) and presented findings and recommendations to 10+ executives, including the CAO.',
+    ],
+  },
+  {
+    company:  'Chevron',
+    location: 'San Ramon, CA',
+    roles: [
+      {
+        title:  'Finance Development Program — Summer Analyst',
+        period: 'Jun 2013 – Aug 2013',
+      },
+    ],
+    bullets: [
+      'Analyzed monthly cash flow variances ranging from $200K to $20M+ per account within Chevron Shipping Company.',
+      'Re-designed the 3-year business planning forecast for the Strategic Planning & Analysis team, enabling YoY comparisons across all vessel classes.',
+      'Reclaimed $2.5M by compiling documentation and evidence for a vessel insurance claim.',
+      'Conducted SOX and FCPA compliance testing across 4 international offices within procure-to-pay and cash reimbursement workflows.',
+    ],
+  },
+];
+
+const education = [
+  {
+    school:  'San Francisco State University',
+    degree:  'B.S. Accountancy',
+    period:  '2010 – 2014',
+    honors:  'Summa Cum Laude · 3.91 Major GPA · Chevron Accounting Scholar',
+  },
+];
+
+const certifications = [
+  { name: 'Certified Public Accountant (CPA)', issuer: 'California Board of Accountancy', period: '2015 – 2026' },
+];
+
+const skills = {
+  'Product':         ['Monetization & Pricing', 'PLG', 'A/B Testing', 'Roadmapping', 'PRD Writing', 'Agile / Scrum'],
+  'iOS Development': ['Swift', 'SwiftUI', 'Xcode', 'Swift Package Manager', 'App Store Connect'],
+  'Data & Tools':    ['SQL', 'Python', 'Amplitude', 'Tableau', 'Figma', 'Intercom'],
+  'Languages':       ['English (Native)', 'Burmese (Working)', 'Mandarin (Elementary)', 'Japanese (Elementary)'],
+};
+---
+
+<BaseLayout
+  title="Résumé"
+  description="Work history, skills, and experience for William Chin — iOS developer and product builder."
+>
+  <div class="content-container py-16 sm:py-24">
+
+    <!-- Header -->
+    <header class="mb-14">
+      <h1 class="font-serif text-headline text-ink mb-3">Résumé</h1>
+      <p class="text-ink-muted mb-6">
+        Principal PM by day, iOS developer by night. I build products at scale and ship apps from scratch.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="mailto:hello@williamchin.dev"
+           class="tag hover:text-accent hover:border-accent/40">
+          hello@williamchin.dev
+        </a>
+        <a href="https://github.com/williamchin" target="_blank" rel="noopener" class="tag">
+          github.com/williamchin
+        </a>
+        <a href="/resume.pdf" target="_blank"
+           class="inline-flex items-center gap-1.5 px-3 py-1 rounded-pill text-xs font-medium
+                  bg-accent text-white hover:bg-accent-dark transition-colors">
+          Download PDF ↓
+        </a>
+      </div>
+    </header>
+
+    <div class="space-y-16">
+
+      <!-- Experience -->
+      <section>
+        <h2 class="text-xs font-semibold tracking-widest uppercase text-ink-faint mb-8">Experience</h2>
+        <div class="space-y-12">
+          {experience.map((job) => (
+            <div class="grid sm:grid-cols-4 gap-3 sm:gap-6">
+
+              <!-- Left: Company + location -->
+              <div class="sm:col-span-1 pt-0.5">
+                <p class="text-sm font-semibold text-ink">{job.company}</p>
+                <p class="text-xs text-ink-faint mt-0.5">{job.location}</p>
+              </div>
+
+              <!-- Right: Roles + bullets -->
+              <div class="sm:col-span-3">
+                <!-- Role progression (stacked within same company) -->
+                <div class="flex flex-col gap-0.5 mb-4">
+                  {job.roles.map((role, i) => (
+                    <div class="flex items-baseline justify-between gap-4">
+                      <span class:list={[
+                        'text-sm font-medium',
+                        i === 0 ? 'text-ink' : 'text-ink-muted'
+                      ]}>
+                        {role.title}
+                      </span>
+                      <span class="text-xs text-ink-faint flex-shrink-0">{role.period}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <!-- Bullets (shared across all roles at this company) -->
+                <ul class="space-y-2.5">
+                  {job.bullets.map((bullet) => (
+                    <li class="flex gap-2 text-sm text-ink-soft leading-relaxed">
+                      <span class="text-accent mt-1.5 flex-shrink-0 text-[10px]">▸</span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="h-px bg-gradient-to-r from-accent/30 via-cream-300 to-transparent" />
+
+      <!-- Education + Certifications -->
+      <section>
+        <h2 class="text-xs font-semibold tracking-widest uppercase text-ink-faint mb-8">Education</h2>
+        <div class="space-y-6">
+          {education.map((edu) => (
+            <div class="grid sm:grid-cols-4 gap-3 sm:gap-6">
+              <div class="sm:col-span-1 pt-0.5">
+                <p class="text-sm font-medium text-ink-muted">{edu.period}</p>
+              </div>
+              <div class="sm:col-span-3">
+                <h3 class="font-semibold text-ink">{edu.school}</h3>
+                <p class="text-sm text-ink-muted">{edu.degree}</p>
+                {edu.honors && (
+                  <p class="text-xs text-ink-faint mt-1">{edu.honors}</p>
+                )}
+              </div>
+            </div>
+          ))}
+
+          {certifications.map((cert) => (
+            <div class="grid sm:grid-cols-4 gap-3 sm:gap-6">
+              <div class="sm:col-span-1 pt-0.5">
+                <p class="text-sm font-medium text-ink-muted">{cert.period}</p>
+              </div>
+              <div class="sm:col-span-3">
+                <h3 class="font-semibold text-ink">{cert.name}</h3>
+                <p class="text-sm text-ink-muted">{cert.issuer}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="h-px bg-gradient-to-r from-accent/30 via-cream-300 to-transparent" />
+
+      <!-- Skills -->
+      <section>
+        <h2 class="text-xs font-semibold tracking-widest uppercase text-ink-faint mb-8">Skills</h2>
+        <div class="grid sm:grid-cols-2 gap-6">
+          {Object.entries(skills).map(([category, items]) => (
+            <div>
+              <h3 class="text-sm font-medium text-ink mb-3">{category}</h3>
+              <div class="flex flex-wrap gap-2">
+                {items.map((skill) => <span class="tag">{skill}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>

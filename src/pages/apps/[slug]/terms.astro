@@ -1,0 +1,136 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('apps');
+  return apps.map((entry) => ({
+    params: { slug: entry.slug },
+    props:  { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { name } = entry.data;
+const effectiveDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
+}).format(entry.data.launchDate ?? new Date());
+---
+
+<BaseLayout
+  title={`Terms of Service — ${name}`}
+  description={`Terms of Service for ${name} by William Chin.`}
+  noIndex={false}
+>
+  <div class="content-container py-16 sm:py-24">
+
+    <a href={`/apps/${entry.slug}`} class="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-accent transition-colors mb-10 group">
+      <span class="transition-transform group-hover:-translate-x-0.5">←</span>
+      Back to {name}
+    </a>
+
+    <div class="prose prose-warm max-w-none prose-headings:font-serif">
+      <h1>Terms of Service</h1>
+      <p class="lead">Effective {effectiveDate}</p>
+
+      <p>
+        By downloading or using {name}, you agree to these terms. I've written them to be straightforward.
+        If something isn't clear, just ask.
+      </p>
+
+      <h2>Use the app fairly</h2>
+      <p>
+        {name} is for personal, lawful use. Don't reverse engineer it, tamper with it, submit
+        false data through equipment requests, or use it in any way that could harm others.
+      </p>
+
+      <h2>Account</h2>
+      <p>
+        Creating an account is optional. If you do, you're responsible for keeping your password
+        safe and for any activity under your account. Let me know immediately if something looks off.
+      </p>
+
+      <h2>Your data is yours</h2>
+      <p>
+        Everything you create in {name} belongs to you. I don't claim any rights to your brew logs,
+        notes, or preferences. Local data stays on your device — I can't access it and I'm not
+        responsible for it if your device is lost or the app is uninstalled.
+      </p>
+
+      <h2>Brew parameters are informational</h2>
+      <p>
+        {name} is a tracking tool. Any parameters, ratios, or suggestions in the app are for
+        reference only. I make no guarantees about the quality or outcome of any brew. You're
+        responsible for your own equipment and brewing practices.
+      </p>
+
+      <h2>The app is provided as-is</h2>
+      <p>
+        I've worked hard to make {name} reliable, but I can't guarantee it'll be perfect all the time.
+        The app is provided "as is" — without warranties of any kind. I'm not liable for data loss,
+        lost revenue, equipment damage, or any other indirect damages.
+      </p>
+
+      <h2>Limitation of liability</h2>
+      <p>
+        To the maximum extent permitted by law, my total liability to you is limited to the amount
+        you paid for the app in the past twelve months, or 0 — whichever is less.
+      </p>
+
+      <h2>Purchases and subscriptions</h2>
+      <p>
+        {name} offers an optional Pro subscription. All payments are processed by Apple (iOS) or
+        Google (Android) depending on where you downloaded the app. I don't handle payment details directly.
+      </p>
+      <p>
+        <strong>iOS:</strong> Subscriptions auto-renew unless you cancel at least 24 hours before the renewal date.
+        Manage or cancel in your Apple ID settings. For refunds, contact Apple Support.
+      </p>
+      <p>
+        <strong>Android:</strong> Subscriptions auto-renew unless you cancel before the renewal date.
+        Manage or cancel in the Google Play Store under Subscriptions. For refunds, contact Google Play Support.
+      </p>
+
+      <h2>Apple App Store</h2>
+      <p>
+        These terms are between you and me — not Apple. Apple has no obligation to provide support,
+        warranties, or to address any claims related to the app. Apple is a third-party beneficiary
+        of these terms and may enforce them against you.
+      </p>
+
+      <h2>Google Play Store</h2>
+      <p>
+        These terms are between you and me — not Google. Google has no obligation to provide support,
+        warranties, or to address any claims related to the app. If there is any conflict between
+        these terms and Google Play's Developer Distribution Agreement, Google Play's terms govern
+        only to the extent required.
+      </p>
+
+      <h2>Intellectual property</h2>
+      <p>
+        {name}, its design, and its code are mine. Please don't copy, redistribute, or build on it
+        without permission.
+      </p>
+
+      <h2>Governing law</h2>
+      <p>
+        These terms are governed by the laws of the State of California. Any disputes will be resolved
+        through binding arbitration in California, except either party may seek injunctive relief in
+        any court of competent jurisdiction.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        I may update these terms when something meaningful changes. I'll update the effective date
+        when I do. Continued use of the app means you accept the updated terms.
+      </p>
+
+      <h2>Questions?</h2>
+      <p>
+        Email me: <a href="mailto:hello@williamchin.dev">hello@williamchin.dev</a>.<br />
+        I read every message.
+      </p>
+    </div>
+
+  </div>
+</BaseLayout>

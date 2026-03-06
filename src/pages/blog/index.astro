@@ -1,0 +1,82 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+
+// Group by year
+const postsByYear = posts.reduce((acc, post) => {
+  const year = post.data.publishDate.getFullYear().toString();
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(post);
+  return acc;
+}, {} as Record<string, typeof posts>);
+
+const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a));
+---
+
+<BaseLayout
+  title="Writing"
+  description="Thoughts on iOS development, product building, and building end-to-end as a solo developer."
+>
+  <div class="content-container py-16 sm:py-24">
+
+    <!-- Header -->
+    <header class="mb-14">
+      <h1 class="font-serif text-headline text-ink mb-4">Writing</h1>
+      <p class="text-lg text-ink-muted leading-relaxed max-w-lg">
+        Notes on building iOS apps, product thinking, and navigating the indie developer life.
+      </p>
+    </header>
+
+    <!-- Posts by year -->
+    {years.length === 0 ? (
+      <div class="py-20 text-center">
+        <p class="text-ink-faint text-lg mb-2">No posts yet</p>
+        <p class="text-sm text-ink-faint">Check back soon — something's in the works.</p>
+      </div>
+    ) : (
+      <div class="space-y-14">
+        {years.map((year) => (
+          <section>
+            <h2 class="text-xs font-semibold tracking-widest uppercase text-ink-faint mb-6">{year}</h2>
+            <div class="divide-y divide-cream-300">
+              {postsByYear[year].map((post) => (
+                <article class="group py-5 first:pt-0 last:pb-0">
+                  <a href={`/blog/${post.slug}`} class="flex items-start justify-between gap-6">
+                    <div class="flex-1 min-w-0">
+                      <h3 class="font-medium text-ink group-hover:text-accent transition-colors mb-1.5 leading-snug">
+                        {post.data.title}
+                      </h3>
+                      <p class="text-sm text-ink-muted leading-relaxed line-clamp-2 mb-3">
+                        {post.data.description}
+                      </p>
+                      {post.data.tags.length > 0 && (
+                        <div class="flex flex-wrap gap-1.5">
+                          {post.data.tags.slice(0, 4).map((tag: string) => (
+                            <span class="tag">{tag}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div class="flex-shrink-0 text-right">
+                      <time class="text-xs text-ink-faint block">
+                        {new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' })
+                          .format(post.data.publishDate)}
+                      </time>
+                      {post.data.readingTime && (
+                        <span class="text-xs text-ink-faint">{post.data.readingTime}m</span>
+                      )}
+                    </div>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    )}
+
+  </div>
+</BaseLayout>

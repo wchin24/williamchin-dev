@@ -1,0 +1,123 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const featuredApps = await getCollection('apps', ({ data }) => data.featured);
+---
+
+<BaseLayout
+  title="William Chin"
+  description="Principal PM at Amplitude and indie app builder. I build products at scale and ship apps I wish existed."
+>
+
+  <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 dot-grid opacity-60 pointer-events-none" />
+    <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-accent/10 blur-3xl pointer-events-none animate-glow-pulse" />
+
+    <div class="page-container relative py-24 sm:py-36">
+      <div class="animate-fade-up">
+        <h1 class="font-serif text-display text-ink mb-5 leading-none">
+          William Chin
+        </h1>
+        <p class="text-xl sm:text-2xl text-ink-muted font-light leading-relaxed max-w-xl mb-10">
+          Building products at scale.<br />
+          Shipping apps I wish existed.<br />
+          <em class="text-ink not-italic font-medium">Powered by coffee.</em>
+        </p>
+
+        <a href="/apps"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
+                  bg-accent text-white text-sm font-semibold
+                  hover:bg-accent-dark transition-colors duration-200
+                  shadow-sm hover:shadow-[0_0_16px_rgba(91,79,207,0.3)]">
+          See my apps
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── About ─────────────────────────────────────────────────────────── -->
+  <section class="border-t border-cream-300">
+    <div class="page-container py-20">
+      <div class="grid sm:grid-cols-5 gap-12 items-start">
+        <div class="sm:col-span-3 space-y-5 text-ink-soft leading-relaxed">
+          <h2 class="font-serif text-title text-ink">About me</h2>
+          <p>
+            I'm a Principal Product Manager at Amplitude, where I lead monetization
+            strategy across our sales-led and self-serve motions. Before that, I spent
+            four years at Deloitte advising large MANGA clients on fintech compliance
+            and digital revenue operations, and before that led partner and merchant
+            tools at Clover Network.
+          </p>
+          <p>
+            On the side, I build apps — because the best way to stay sharp as a PM
+            is to actually ship something. I run the full cycle myself: idea, spec,
+            code, and submission.
+          </p>
+          <p>
+            Off the clock, I'm either min-maxing my coffee, hanging out with my wife and Samoyed (Truffles), or trying to break 100 in golf.
+          </p>
+        </div>
+
+        <aside class="sm:col-span-2 space-y-4">
+          {[
+            { label: 'Day job',   value: 'Principal PM @ Amplitude' },
+            { label: 'Prev',      value: 'Deloitte (4+ yrs)' },
+            { label: '',          value: 'Clover Network (2 yrs)' },
+            { label: 'Building',  value: 'Apps on the side' },
+            { label: 'Based in',  value: 'San Francisco Bay Area' },
+            { label: 'Dog',       value: 'Truffles 🐾' },
+            { label: 'Fuel',      value: 'Coffee, always' },
+          ].map(({ label, value }) => (
+            <div class="flex gap-3">
+              <span class="text-sm text-ink-faint w-24 flex-shrink-0 pt-0.5">{label}</span>
+              <span class="text-sm text-ink-soft font-medium">{value}</span>
+            </div>
+          ))}
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Apps ──────────────────────────────────────────────────────────── -->
+  {featuredApps.length > 0 && (
+    <section class="border-t border-cream-300">
+      <div class="page-container py-20">
+        <div class="flex items-end justify-between mb-10">
+          <h2 class="font-serif text-title text-ink">Apps</h2>
+          <a href="/apps" class="text-sm text-ink-muted hover:text-accent transition-colors">
+            All apps →
+          </a>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {featuredApps.map((app) => (
+            <a href={`/apps/${app.slug}`}
+               class="group p-6 rounded-card bg-cream-50 border border-cream-300
+                      card-hover hover:border-accent/30">
+              <div class="flex items-start gap-4 mb-4">
+                {app.data.icon
+                  ? <img src={app.data.icon} alt={app.data.name} class="w-12 h-12 rounded-xl shadow-sm" />
+                  : <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-xl"
+                           style={`background-color: ${app.data.accentColor}`}>
+                      {app.data.name[0]}
+                    </div>
+                }
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-semibold text-ink group-hover:text-accent transition-colors">{app.data.name}</h3>
+                  <p class="text-sm text-ink-faint">{app.data.category}</p>
+                </div>
+              </div>
+              <p class="text-sm text-ink-muted leading-relaxed">{app.data.tagline}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {app.data.tags.slice(0, 3).map((tag: string) => <span class="tag">{tag}</span>)}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+</BaseLayout>

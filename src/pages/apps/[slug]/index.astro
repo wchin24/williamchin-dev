@@ -1,0 +1,117 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('apps');
+  return apps.map((entry) => ({
+    params: { slug: entry.slug },
+    props:  { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { name, tagline, description, appStoreUrl, websiteUrl,
+        status, platform, category, tags, icon, screenshots,
+        accentColor, launchDate } = entry.data;
+---
+
+<BaseLayout title={name} description={description}>
+  <article class="page-container py-16 sm:py-24">
+
+    <!-- Back -->
+    <a href="/apps" class="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-accent transition-colors mb-10 group">
+      <span class="transition-transform group-hover:-translate-x-0.5">←</span>
+      All apps
+    </a>
+
+    <!-- Hero -->
+    <div class="grid lg:grid-cols-2 gap-12 items-start mb-16">
+      <div>
+        <!-- Icon -->
+        <div class="mb-6">
+          {icon
+            ? <img src={icon} alt={name} class="w-24 h-24 rounded-3xl shadow-lg" />
+            : <div class="w-24 h-24 rounded-3xl flex items-center justify-center
+                           text-white font-bold text-4xl shadow-lg"
+                     style={`background-color: ${accentColor}`}>
+                {name[0]}
+              </div>
+          }
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="tag">{category}</span>
+          {platform.map((p: string) => <span class="tag">{p}</span>)}
+          {status !== 'live' && <span class="tag capitalize">{status}</span>}
+        </div>
+
+        <h1 class="font-serif text-headline text-ink mb-3">{name}</h1>
+        <p class="text-xl text-ink-muted leading-relaxed mb-8">{tagline}</p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-3">
+          {appStoreUrl && (
+            <a href={appStoreUrl} target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
+                      bg-ink text-white text-sm font-semibold
+                      hover:bg-ink-soft transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+              App Store
+            </a>
+          )}
+          {websiteUrl && (
+            <a href={websiteUrl} target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
+                      bg-cream-300 text-ink text-sm font-semibold
+                      hover:bg-cream-400 transition-colors">
+              Website →
+            </a>
+          )}
+        </div>
+
+        <!-- Legal links -->
+        <div class="flex gap-4 mt-4">
+          <a href={`/apps/${entry.slug}/privacy`}
+             class="text-xs text-ink-faint hover:text-accent transition-colors">
+            Privacy Policy
+          </a>
+          <span class="text-ink-faint text-xs">·</span>
+          <a href={`/apps/${entry.slug}/terms`}
+             class="text-xs text-ink-faint hover:text-accent transition-colors">
+            Terms of Service
+          </a>
+        </div>
+      </div>
+
+      <!-- Screenshots -->
+      {screenshots.length > 0 && (
+        <div class="flex gap-3 overflow-x-auto pb-2">
+          {screenshots.map((src: string) => (
+            <img src={src} alt={`${name} screenshot`}
+                 class="h-[500px] w-auto rounded-2xl shadow-lg flex-shrink-0" />
+          ))}
+        </div>
+      )}
+    </div>
+
+    <!-- Description body (MDX content) -->
+    <div class="max-w-content prose prose-warm
+                prose-headings:font-serif prose-headings:tracking-tight
+                prose-a:no-underline prose-a:border-b prose-a:border-accent/40
+                prose-a:hover:border-accent prose-a:transition-colors">
+      <Content />
+    </div>
+
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mt-12 pt-8 border-t border-cream-300">
+        {tags.map((tag: string) => <span class="tag">{tag}</span>)}
+      </div>
+    )}
+
+  </article>
+</BaseLayout>

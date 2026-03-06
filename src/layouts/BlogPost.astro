@@ -1,0 +1,77 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const { title, description, publishDate, tags, readingTime } = entry.data;
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
+}).format(publishDate);
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="content-container py-16 sm:py-24">
+
+    <!-- Back link -->
+    <a href="/blog" class="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-accent transition-colors mb-10 group">
+      <span class="transition-transform group-hover:-translate-x-0.5">←</span>
+      All writing
+    </a>
+
+    <!-- Header -->
+    <header class="mb-12">
+      <!-- Tags -->
+      {tags && tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-5">
+          {tags.map((tag: string) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+
+      <h1 class="font-serif text-headline text-ink mb-4 leading-tight">
+        {title}
+      </h1>
+
+      {description && (
+        <p class="text-lg text-ink-muted leading-relaxed mb-6">{description}</p>
+      )}
+
+      <div class="flex items-center gap-3 text-sm text-ink-faint">
+        <time datetime={publishDate.toISOString()}>{formattedDate}</time>
+        {readingTime && (
+          <>
+            <span>·</span>
+            <span>{readingTime} min read</span>
+          </>
+        )}
+      </div>
+
+      <div class="mt-8 h-px bg-gradient-to-r from-accent/30 via-cream-300 to-transparent" />
+    </header>
+
+    <!-- Body -->
+    <div class="prose prose-warm max-w-none
+                prose-headings:font-serif prose-headings:tracking-tight
+                prose-a:no-underline prose-a:border-b prose-a:border-accent/40
+                prose-a:hover:border-accent prose-a:transition-colors
+                prose-code:text-sm prose-code:font-mono
+                prose-img:rounded-card prose-img:shadow-md">
+      <slot />
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 pt-8 border-t border-cream-300">
+      <a href="/blog" class="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-accent transition-colors group">
+        <span class="transition-transform group-hover:-translate-x-0.5">←</span>
+        Back to all writing
+      </a>
+    </footer>
+
+  </article>
+</BaseLayout>

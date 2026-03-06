@@ -1,0 +1,106 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allApps = await getCollection('apps');
+const apps = allApps.sort((a, b) => {
+  // Featured first, then by launch date
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  const dateA = a.data.launchDate?.valueOf() ?? 0;
+  const dateB = b.data.launchDate?.valueOf() ?? 0;
+  return dateB - dateA;
+});
+
+const statusLabel: Record<string, string> = {
+  live:          'Available',
+  beta:          'Beta',
+  development:   'In Development',
+  discontinued:  'Discontinued',
+};
+const statusColor: Record<string, string> = {
+  live:          'bg-emerald-100 text-emerald-700 border-emerald-200',
+  beta:          'bg-amber-100 text-amber-700 border-amber-200',
+  development:   'bg-blue-100 text-blue-700 border-blue-200',
+  discontinued:  'bg-cream-300 text-ink-faint border-cream-400',
+};
+---
+
+<BaseLayout
+  title="Apps"
+  description="iOS apps built by William Chin — designed from the ground up with Swift and SwiftUI."
+>
+  <div class="page-container py-16 sm:py-24">
+
+    <!-- Header -->
+    <header class="content-container mx-0 px-0 mb-14">
+      <h1 class="font-serif text-headline text-ink mb-4">Apps</h1>
+      <p class="text-lg text-ink-muted leading-relaxed max-w-lg">
+        iOS apps I've designed and built — from idea to App Store.
+        Each one ships as a native Swift and SwiftUI app.
+      </p>
+    </header>
+
+    <!-- App grid -->
+    {apps.length === 0 ? (
+      <div class="py-24 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">📱</span>
+        </div>
+        <p class="text-ink-faint text-lg mb-2">Apps coming soon</p>
+        <p class="text-sm text-ink-faint">Something's being built. Follow along on Twitter.</p>
+      </div>
+    ) : (
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {apps.map((app) => (
+          <a href={`/apps/${app.slug}`}
+             class="group flex flex-col p-6 rounded-card bg-cream-50 border border-cream-300
+                    card-hover hover:border-accent/30">
+
+            <!-- Icon + Status -->
+            <div class="flex items-start justify-between mb-5">
+              {app.data.icon
+                ? <img src={app.data.icon} alt={app.data.name}
+                       class="w-16 h-16 rounded-2xl shadow-md" />
+                : <div class="w-16 h-16 rounded-2xl flex items-center justify-center
+                               text-white font-bold text-2xl shadow-md"
+                         style={`background-color: ${app.data.accentColor}`}>
+                    {app.data.name[0]}
+                  </div>
+              }
+              <span class:list={[
+                'inline-flex items-center px-2.5 py-1 rounded-pill text-xs font-medium border',
+                statusColor[app.data.status]
+              ]}>
+                {statusLabel[app.data.status]}
+              </span>
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1">
+              <h2 class="font-semibold text-ink group-hover:text-accent transition-colors mb-1">
+                {app.data.name}
+              </h2>
+              <p class="text-sm text-ink-faint mb-3">{app.data.category}</p>
+              <p class="text-sm text-ink-muted leading-relaxed">{app.data.tagline}</p>
+            </div>
+
+            <!-- Tags + platform -->
+            <div class="mt-5 pt-4 border-t border-cream-300 flex items-center justify-between gap-2">
+              <div class="flex flex-wrap gap-1.5">
+                {app.data.tags.slice(0, 2).map((tag: string) => <span class="tag">{tag}</span>)}
+              </div>
+              <div class="flex gap-1">
+                {app.data.platform.map((p: string) => (
+                  <span class="text-xs text-ink-faint font-medium">{p}</span>
+                ))}
+              </div>
+            </div>
+
+          </a>
+        ))}
+      </div>
+    )}
+
+  </div>
+</BaseLayout>

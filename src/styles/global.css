@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --page-padding: clamp(1.25rem, 5vw, 4rem);
+  }
+
+  html {
+    @apply bg-cream-100 text-ink antialiased;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen;
+  }
+
+  /* Selection color — indigo tinted */
+  ::selection {
+    @apply bg-accent/20 text-accent-dark;
+  }
+
+  /* Focus outline that matches the design */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}
+
+@layer components {
+  /* Noise texture overlay — subtle anime texture */
+  .noise::after {
+    content: '';
+    @apply fixed inset-0 pointer-events-none opacity-[0.03] z-50;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* Accent underline — used on headings and nav */
+  .accent-line {
+    @apply relative;
+  }
+  .accent-line::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-[2px] bg-accent scale-x-0 origin-left transition-transform duration-300;
+  }
+  .accent-line:hover::after {
+    @apply scale-x-100;
+  }
+
+  /* Card hover lift */
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  /* Decorative dot grid */
+  .dot-grid {
+    background-image: radial-gradient(circle, rgba(91, 79, 207, 0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Tag / pill */
+  .tag {
+    @apply inline-flex items-center px-3 py-1 rounded-pill text-xs font-medium
+           bg-cream-300 text-ink-muted border border-cream-400
+           transition-colors duration-200 hover:border-accent/40 hover:text-accent;
+  }
+
+  /* Page container */
+  .page-container {
+    @apply max-w-wide mx-auto px-[var(--page-padding)];
+  }
+
+  /* Content container (blog posts, resume) */
+  .content-container {
+    @apply max-w-content mx-auto px-[var(--page-padding)];
+  }
+}
+
+@layer utilities {
+  /* Text gradient — accent purple to crimson */
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent to-crimson bg-clip-text text-transparent;
+  }
+
+  /* Anime-style border glow */
+  .border-glow {
+    box-shadow: 0 0 0 1px rgba(91, 79, 207, 0.3), 0 0 16px rgba(91, 79, 207, 0.1);
+  }
+
+  /* Subtle bottom border separator */
+  .border-warm {
+    @apply border-cream-300;
+  }
+}

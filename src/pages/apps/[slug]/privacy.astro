@@ -1,0 +1,138 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('apps');
+  return apps.map((entry) => ({
+    params: { slug: entry.slug },
+    props:  { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { name } = entry.data;
+const effectiveDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
+}).format(entry.data.launchDate ?? new Date());
+---
+
+<BaseLayout
+  title={`Privacy Policy — ${name}`}
+  description={`Privacy Policy for ${name} by William Chin.`}
+  noIndex={false}
+>
+  <div class="content-container py-16 sm:py-24">
+
+    <a href={`/apps/${entry.slug}`} class="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-accent transition-colors mb-10 group">
+      <span class="transition-transform group-hover:-translate-x-0.5">←</span>
+      Back to {name}
+    </a>
+
+    <div class="prose prose-warm max-w-none prose-headings:font-serif">
+      <h1>Privacy Policy</h1>
+      <p class="lead">Effective {effectiveDate}</p>
+
+      <p>
+        Hi, I'm Will. I made {name}. Here's exactly what happens with your data — no jargon.
+      </p>
+
+      <h2>The short version</h2>
+      <p>
+        Your brew data lives on your device and never goes to my servers. I can't see it.
+        Account creation is optional and only syncs your profile preferences.
+        I don't track you, sell your data, or run ads.
+      </p>
+
+      <h2>What stays on your device</h2>
+      <p>
+        Everything you log in {name} — brew sessions, grind sizes, water temps, tasting notes,
+        equipment — is stored locally on your device and goes nowhere else. I have no access to it.
+        If you delete the app, it's gone.
+      </p>
+
+      <h2>Optional account</h2>
+      <p>
+        You don't need an account to use {name}. All core features work without one.
+      </p>
+      <p>
+        If you choose to create an account, I collect your email address and a hashed password
+        to enable cloud backup of your profile preferences (things like brewing method, temperature
+        units, and favorite roaster). Your brew sessions are <strong>never</strong> part of this backup.
+        Cloud data is stored on <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase</a>,
+        transmitted over HTTPS, with row-level security so only you can access your own data.
+      </p>
+
+      <h2>Equipment requests</h2>
+      <p>
+        If you submit a request to add new equipment to the app, I collect the equipment name,
+        category, brand, your user ID, and email. I use this only to review and prioritize
+        what to add next.
+      </p>
+
+      <h2>What I don't collect</h2>
+      <ul>
+        <li>Your location</li>
+        <li>Your contacts</li>
+        <li>Device identifiers or fingerprints</li>
+        <li>Crash reports or diagnostics</li>
+        <li>Analytics or behavioral tracking data</li>
+        <li>Advertising identifiers</li>
+        <li>Anything from other apps on your device</li>
+      </ul>
+
+      <h2>Subscriptions</h2>
+      <p>
+        {name} offers an optional Pro subscription. If you purchase one, the transaction is processed
+        by Apple (iOS) or Google (Android) — I never see your payment details directly.
+      </p>
+      <p>
+        To manage subscriptions across devices, I use <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat</a>.
+        RevenueCat receives your app user ID, platform, and purchase transaction details. It does
+        not receive your brew data, profile information, or email address.
+      </p>
+
+      <h2>Third-party services</h2>
+      <table>
+        <thead>
+          <tr><th>Service</th><th>Purpose</th><th>Required?</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase</a></td>
+            <td>Cloud backup of profile preferences + authentication</td>
+            <td>Optional (account only)</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat</a></td>
+            <td>Subscription management</td>
+            <td>Only if you subscribe to Pro</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        No advertising networks. No analytics platforms. No social media SDKs.
+        I don't sell your data to anyone. Ever.
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        {name} isn't directed at children under 13. I don't knowingly collect data from children.
+        If you think your child has provided personal information, email me and I'll delete it right away.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        If I make meaningful changes to this policy, I'll update the effective date above.
+        Nothing here will change in a way that surprises you.
+      </p>
+
+      <h2>Questions?</h2>
+      <p>
+        Email me: <a href="mailto:hello@williamchin.dev">hello@williamchin.dev</a>.<br />
+        I read every message.
+      </p>
+    </div>
+
+  </div>
+</BaseLayout>
