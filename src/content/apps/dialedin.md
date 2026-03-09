@@ -29,16 +29,6 @@ Your brew data stays on your device. Always.
 - Full brew history with filtering and comparison
 - Optional account for backing up profile preferences across devices
 
-### DialedIn Pro
-
-Pro unlocks the features built for serious coffee people:
-
-- **Brew Analytics** — rating trends over time, brew frequency, grind distribution, and equipment usage stats
-- **Brew Templates** — save your best recipes and pre-fill all parameters in one tap
-- **Shareable Brew Cards** — create beautiful cards from any session and share them anywhere
-
-$2.99/month or $29.99/year. Free to try, no paywall on core logging.
-
 ### Why I Built It
 
 I kept nailing a great cup one morning and losing it the next because I forgot what I changed. I tried spreadsheets. Too much friction. I wanted something fast, simple, and built for how I actually brew — so I built it myself.
@@ -49,4 +39,4 @@ I kept nailing a great cup one morning and losing it the next because I forgot w
 - Available on iOS and Android
 - Local-first: brew data never leaves your device
 - Optional Supabase-backed account for preference sync
-- Pro subscriptions via RevenueCat
+- Donation-supported via Buy Me a Coffee — free forever, no paywalls
