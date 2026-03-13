@@ -11,7 +11,13 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { name } = entry.data;
+const { name, termsUrl } = entry.data;
+
+// If the app has a dedicated terms page, redirect there (single source of truth)
+if (termsUrl) {
+  return Astro.redirect(termsUrl, 301);
+}
+
 const effectiveDate = new Intl.DateTimeFormat('en-US', {
   year: 'numeric', month: 'long', day: 'numeric'
 }).format(entry.data.launchDate ?? new Date());

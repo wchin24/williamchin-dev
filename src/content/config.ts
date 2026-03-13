@@ -33,9 +33,11 @@ const apps = defineCollection({
     icon:           z.string().optional(), // path to icon in public/
     screenshots:    z.array(z.string()).default([]), // paths in public/
     accentColor:    z.string().default('#5B4FCF'), // hex for app theming
-    // Legal — if false, generic policy pages are used
+    // Legal — privacyUrl/termsUrl redirect to an external source of truth (e.g. app's own site)
     hasCustomPrivacy: z.boolean().default(false),
     hasCustomTerms:   z.boolean().default(false),
+    privacyUrl:       z.string().url().optional(),
+    termsUrl:         z.string().url().optional(),
   }),
 });
 
