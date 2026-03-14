@@ -13,16 +13,20 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { name, privacyUrl } = entry.data;
 
-// If the app has a dedicated privacy page, redirect there (single source of truth)
-if (privacyUrl) {
-  return Astro.redirect(privacyUrl, 301);
-}
-
 const effectiveDate = new Intl.DateTimeFormat('en-US', {
   year: 'numeric', month: 'long', day: 'numeric'
 }).format(entry.data.launchDate ?? new Date());
 ---
 
+{privacyUrl ? (
+  <html>
+    <head>
+      <meta http-equiv="refresh" content={`0; url=${privacyUrl}`} />
+      <script define:vars={{ redirectUrl: privacyUrl }}>window.location.replace(redirectUrl);</script>
+    </head>
+    <body><p>Redirecting… <a href={privacyUrl}>{privacyUrl}</a></p></body>
+  </html>
+) : (
 <BaseLayout
   title={`Privacy Policy — ${name}`}
   description={`Privacy Policy for ${name} by William Chin.`}
@@ -139,3 +143,4 @@ const effectiveDate = new Intl.DateTimeFormat('en-US', {
 
   </div>
 </BaseLayout>
+)}
