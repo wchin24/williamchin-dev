@@ -12,8 +12,8 @@ launchDate: 2026-06-01
 icon: "/apps/dialedin/icon.png"
 hasCustomPrivacy: true
 hasCustomTerms: true
-privacyUrl: "https://dialedin.app/privacy"
-termsUrl: "https://dialedin.app/terms"
+privacyUrl: "https://dialedin-coffee.com/privacy"
+termsUrl: "https://dialedin-coffee.com/terms"
 ---
 
 ## About DialedIn
