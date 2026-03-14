@@ -9,7 +9,7 @@ tags: ["Coffee", "Brewing", "Tracking"]
 featured: true
 accentColor: "#6F4E37"
 launchDate: 2026-06-01
-icon: "/apps/dialedin/icon.svg"
+icon: "/apps/dialedin/icon.png"
 hasCustomPrivacy: true
 hasCustomTerms: true
 privacyUrl: "https://dialedin.app/privacy"
