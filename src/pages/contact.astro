@@ -1,0 +1,96 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const consultingAreas = [
+  {
+    title: 'Product Led Growth',
+    description: 'Designing self-serve funnels, activation loops, and PLG motions that turn users into paying customers.',
+  },
+  {
+    title: 'Monetization Strategy',
+    description: 'Building sustainable revenue models — from freemium to enterprise — with the right blend of sales-led and product-led levers.',
+  },
+  {
+    title: 'Pricing & Packaging',
+    description: 'Structuring tiers, entitlements, and value metrics that resonate with buyers and drive expansion revenue.',
+  },
+  {
+    title: 'Go-to-Market Tech Stack',
+    description: 'Selecting and integrating the tools (CRM, billing, analytics, messaging) that power a high-performing GTM motion.',
+  },
+  {
+    title: 'Integrating AI into Work & Life',
+    description: 'Identifying high-leverage AI workflows to accelerate your team\'s output or simplify your personal productivity.',
+  },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Reach out to William Chin for consulting and advising opportunities in PLG, monetization, pricing, GTM, and AI integration."
+>
+  <div class="content-container py-16 sm:py-24">
+
+    <!-- Header -->
+    <header class="mb-14">
+      <h1 class="font-serif text-headline text-ink mb-4">Let's work together</h1>
+      <p class="text-ink-muted text-base leading-relaxed max-w-prose">
+        I'm open to advising and consulting engagements. If you're working on a challenge in any of the areas below,
+        I'd love to hear from you.
+      </p>
+    </header>
+
+    <div class="space-y-16">
+
+      <!-- Consulting Areas -->
+      <section>
+        <h2 class="text-xs font-semibold tracking-widest uppercase text-ink-faint mb-8">Areas of focus</h2>
+        <div class="space-y-6">
+          {consultingAreas.map((area) => (
+            <div class="flex gap-4">
+              <span class="text-accent mt-1.5 flex-shrink-0 text-[10px]">▸</span>
+              <div>
+                <h3 class="text-sm font-semibold text-ink mb-1">{area.title}</h3>
+                <p class="text-sm text-ink-soft leading-relaxed">{area.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="h-px bg-gradient-to-r from-accent/30 via-cream-300 to-transparent" />
+
+      <!-- Contact CTA -->
+      <section>
+        <h2 class="text-xs font-semibold tracking-widest uppercase text-ink-faint mb-8">Get in touch</h2>
+        <p class="text-sm text-ink-soft leading-relaxed mb-6 max-w-prose">
+          Send me a note with a brief description of what you're working on and what kind of help you're looking for.
+          I'll get back to you within a few days.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a
+            href="mailto:hello@williamchin.dev"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
+                   bg-accent text-white hover:bg-accent/90 transition-colors duration-200"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            hello@williamchin.dev
+          </a>
+          <a
+            href="https://linkedin.com/in/williamchin24"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="tag hover:text-accent hover:border-accent/40"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
