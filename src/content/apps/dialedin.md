@@ -1,6 +1,6 @@
 ---
 name: "DialedIn"
-tagline: "Stop guessing. Start dialing in."
+tagline: "Perfect Every Cup You Brew"
 description: "DialedIn is a local-first coffee brewing tracker. Log your grind size, water temp, ratio, and notes for every brew — and finally figure out what makes each bag taste its best."
 status: development
 platform: ["iOS", "Android"]
