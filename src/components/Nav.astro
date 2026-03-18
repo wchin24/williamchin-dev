@@ -1,6 +1,7 @@
 ---
 const navLinks = [
   { href: '/apps', label: 'Apps' },
+  { href: 'https://medium.com/@wchin24', label: 'Writing', external: true },
 ];
 
 const socialLinks = [
@@ -52,20 +53,21 @@ const isActive = (href: string) =>
 
       <!-- Page links -->
       <ul class="flex items-center gap-1 mr-3" role="list">
-        {navLinks.map(({ href, label }) => (
+        {navLinks.map(({ href, label, external }) => (
           <li>
             <a
               href={href}
+              {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               class:list={[
                 'relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200',
-                isActive(href)
+                !external && isActive(href)
                   ? 'text-accent bg-accent/8'
                   : 'text-ink-muted hover:text-ink hover:bg-cream-300',
               ]}
-              aria-current={isActive(href) ? 'page' : undefined}
+              aria-current={!external && isActive(href) ? 'page' : undefined}
             >
               {label}
-              {isActive(href) && (
+              {!external && isActive(href) && (
                 <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent" />
               )}
             </a>
