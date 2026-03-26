@@ -110,6 +110,7 @@ const personJsonLd = {
                 href="https://ko-fi.com/williamchin"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-track-external="Ko-fi"
                 class="text-sm text-ink-faint hover:text-[#FF5E5B] transition-colors duration-200"
               >Ko-fi</a>
               <span class="text-cream-400 text-xs select-none">·</span>
@@ -117,6 +118,7 @@ const personJsonLd = {
                 href="https://buymeacoffee.com/williamchin"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-track-external="Buy Me a Coffee"
                 class="text-sm text-ink-faint hover:text-amber-warm transition-colors duration-200"
               >Buy Me a Coffee</a>
             </div>
@@ -135,6 +137,7 @@ const personJsonLd = {
           href="https://medium.com/@wchin24"
           target="_blank"
           rel="noopener noreferrer"
+          data-track-external="Medium"
           class="text-sm text-ink-muted hover:text-accent transition-colors"
         >
           Read on Medium →
@@ -142,7 +145,7 @@ const personJsonLd = {
       </div>
       <p class="text-ink-soft leading-relaxed max-w-xl">
         I write about product management, indie app development, and the craft of building things.
-        Find my articles on <a href="https://medium.com/@wchin24" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">Medium</a>.
+        Find my articles on <a href="https://medium.com/@wchin24" target="_blank" rel="noopener noreferrer" data-track-external="Medium" class="text-accent hover:underline">Medium</a>.
       </p>
     </div>
   </section>
@@ -160,6 +163,8 @@ const personJsonLd = {
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {featuredApps.map((app) => (
             <a href={`/apps/${app.slug}`}
+               data-track-app-card={app.data.name}
+               data-track-app-slug={app.slug}
                class="group p-6 rounded-card bg-cream-50 border border-cream-300
                       card-hover hover:border-accent/30">
               <div class="flex items-start gap-4 mb-4">
@@ -187,3 +192,26 @@ const personJsonLd = {
   )}
 
 </BaseLayout>
+
+<script>
+  import { amplitude } from '../scripts/amplitude.ts';
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-track-app-card]').forEach((el) => {
+    el.addEventListener('click', () => {
+      amplitude.track('App Card Clicked', {
+        app_name: el.dataset.trackAppCard,
+        app_slug: el.dataset.trackAppSlug,
+        source: 'homepage',
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-track-external]').forEach((el) => {
+    el.addEventListener('click', () => {
+      amplitude.track('External Link Clicked', {
+        destination: el.href,
+        label: el.dataset.trackExternal,
+      });
+    });
+  });
+</script>

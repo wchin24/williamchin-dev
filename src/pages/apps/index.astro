@@ -54,6 +54,8 @@ const statusColor: Record<string, string> = {
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {apps.map((app) => (
           <a href={`/apps/${app.slug}`}
+             data-track-app-card={app.data.name}
+             data-track-app-slug={app.slug}
              class="group flex flex-col p-6 rounded-card bg-cream-50 border border-cream-300
                     card-hover hover:border-accent/30">
 
@@ -104,3 +106,17 @@ const statusColor: Record<string, string> = {
 
   </div>
 </BaseLayout>
+
+<script>
+  import { amplitude } from '../../scripts/amplitude.ts';
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-track-app-card]').forEach((el) => {
+    el.addEventListener('click', () => {
+      amplitude.track('App Card Clicked', {
+        app_name: el.dataset.trackAppCard,
+        app_slug: el.dataset.trackAppSlug,
+        source: 'apps_page',
+      });
+    });
+  });
+</script>

@@ -82,6 +82,11 @@ const pageTitle = title === 'William Chin'
   {jsonLd && (
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   )}
+
+  <!-- Amplitude Analytics -->
+  <script>
+    import '../scripts/amplitude.ts';
+  </script>
 </head>
 <body>
   <Nav />

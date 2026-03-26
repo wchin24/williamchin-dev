@@ -88,6 +88,7 @@ const isActive = (href: string) =>
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
+              data-track-social={label}
               class="flex items-center justify-center w-8 h-8 rounded-lg
                      text-ink-faint hover:text-accent hover:bg-accent/8
                      transition-colors duration-200"
@@ -100,3 +101,16 @@ const isActive = (href: string) =>
     </div>
   </nav>
 </header>
+
+<script>
+  import { amplitude } from '../scripts/amplitude.ts';
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-track-social]').forEach((el) => {
+    el.addEventListener('click', () => {
+      amplitude.track('Social Link Clicked', {
+        platform: el.dataset.trackSocial,
+        location: 'nav',
+      });
+    });
+  });
+</script>

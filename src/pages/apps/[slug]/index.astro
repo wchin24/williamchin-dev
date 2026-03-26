@@ -54,6 +54,8 @@ const { name, tagline, description, appStoreUrl, websiteUrl,
         <div class="flex flex-wrap gap-3">
           {appStoreUrl && (
             <a href={appStoreUrl} target="_blank" rel="noopener"
+               data-track-app-store={name}
+               data-track-app-slug={entry.slug}
                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
                       bg-ink text-white text-sm font-semibold
                       hover:bg-ink-soft transition-colors">
@@ -115,3 +117,16 @@ const { name, tagline, description, appStoreUrl, websiteUrl,
 
   </article>
 </BaseLayout>
+
+<script>
+  import { amplitude } from '../../../scripts/amplitude.ts';
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-track-app-store]').forEach((el) => {
+    el.addEventListener('click', () => {
+      amplitude.track('App Store Link Clicked', {
+        app_name: el.dataset.trackAppStore,
+        app_slug: el.dataset.trackAppSlug,
+      });
+    });
+  });
+</script>

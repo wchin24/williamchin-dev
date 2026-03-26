@@ -71,6 +71,7 @@ const consultingAreas = [
         <div class="flex flex-wrap gap-3">
           <a
             href="mailto:hello@williamchin.dev"
+            id="contact-email-cta"
             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
                    bg-accent text-white hover:bg-accent/90 transition-colors duration-200"
           >
@@ -94,3 +95,11 @@ const consultingAreas = [
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  import { amplitude } from '../scripts/amplitude.ts';
+
+  document.getElementById('contact-email-cta')?.addEventListener('click', () => {
+    amplitude.track('Contact Email Clicked');
+  });
+</script>
