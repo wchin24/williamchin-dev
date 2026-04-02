@@ -2,8 +2,9 @@
 name: "DialedIn"
 tagline: "Perfect Every Cup You Brew"
 description: "DialedIn is a local-first coffee brewing tracker. Log your grind size, water temp, ratio, and notes for every brew — and finally figure out what makes each bag taste its best."
-status: development
-platform: ["iOS", "Android"]
+status: live
+platform: ["iOS"]
+appStoreUrl: "https://apps.apple.com/us/app/dialedin-coffee-tracker/id6760576346"
 category: "Food & Drink"
 tags: ["Coffee", "Brewing", "Tracking"]
 featured: true
@@ -39,7 +40,7 @@ I kept nailing a great cup one morning and losing it the next because I forgot w
 ### Technical Details
 
 - Built with React Native and Expo
-- Available on iOS and Android
+- Available on iOS
 - Local-first: brew data never leaves your device
 - Optional Supabase-backed account for preference sync
 - Donation-supported via Buy Me a Coffee — free forever, no paywalls
